@@ -43,12 +43,11 @@ class Tooltip {
                 _Tooltip.changeTooltipContent(tooltipHeader, tooltipBody);
                 _Tooltip.moveTooltipContainer(elem);
 
-                console.log('mouseenter');
             });
 
             elem.addEventListener("mouseleave", () => {
                 _Tooltip._TooltipContainer.classList.remove("shown");
-                console.log('mouseleave');
+
             });
         });
 
@@ -117,7 +116,6 @@ class Tooltip {
                 this._TooltipContainer.style.top = bottomPosition.top + "px";
                 this._TooltipContainer.style.left = bottomPosition.left + "px";
             } else if (tooltipPosition == "top") {
-                console.log("top")
                 this._TooltipContainer.style.top = topPosition.top + "px";
                 this._TooltipContainer.style.left = topPosition.left + "px";
             } else if (tooltipPosition == "right") {
