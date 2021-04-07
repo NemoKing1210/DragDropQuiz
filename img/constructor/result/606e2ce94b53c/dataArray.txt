@@ -1,0 +1,14 @@
+var DataArray = [
+[`606e2ce9567cc.png DROP`, `606e2ce958792.png`, `606e2ce95b43a.png DROP`, `606e2ce95e318.png DROP`],
+[`606e2ce961620.png`, `606e2ce96766a.png`, `606e2ce969c0c.png DROP`, `606e2ce96c7a5.png DROP`],
+[`606e2ce96efde.png`, `606e2ce9714aa.png`, `606e2ce973956.png`, `606e2ce975da5.png`]
+];
+
+var ImgSrc = '../img/constructor/result/606e2ce94b53c/';
+var Width = '1806';
+
+var Height = '948';
+
+var cellSizeX = '451.5';
+
+var cellSizeY = '316';

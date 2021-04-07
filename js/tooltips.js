@@ -1,7 +1,7 @@
 class Tooltip {
     _TooltipContainer;
     _DefaultClass = "tooltip-container";
-    _DefaultAttribute = "data-tooltip";
+    _DefaultAttribute = "tooltip-body";
     _DefaultAttributeHeader = "tooltip-header";
     _DefaultAttributePosition = "tooltip-position";
     _DefaultMarginPX = 10;
@@ -81,6 +81,8 @@ class Tooltip {
                 tooltipPosition = "bottom";
                 dynamicPosition = true;
             }
+
+            tooltipPosition = tooltipPosition.toLowerCase();
 
             const rightPosition = {
                 left: xElement + data.offsetWidth + this._DefaultMarginPX,
