@@ -104,11 +104,8 @@ if (!$_uploadFileError) {
                 $posX = $x * $cellSizeX;
                 $posY = $y * $cellSizeY;
 
-                $cutWidth = $cellSizeX;
-                $cutHeight = $cellSizeY;
-
-                //$cutWidth = ($posY + $cellSizeY) > $width ? ($posY + $cellSizeY - $width) : $cellSizeY;
-                //$cutHeight = ($posX + $cellSizeX) > $height ? ($posX + $cellSizeX - $height) : $cellSizeX;
+                $cutWidth = ($posX + $cellSizeX) > $width ? ($posX + $cellSizeX - $width) : $cellSizeX;
+                $cutHeight = ($posY + $cellSizeY) > $height ? ($posY + $cellSizeY - $height) : $cellSizeY;
 
                 $cutImg = imagecrop($newImg, ['x' => $posX, 'y' => $posY, 'width' => $cutWidth, 'height' => $cutHeight]);
                 imageJPEG($cutImg, $newDir . $uniqueName);
@@ -153,20 +150,5 @@ if (!$_uploadFileError) {
         fclose($textFile);
 
     }
-
-    //var_dump(basename($_File));
-
-    //var_dump($fileType);
-    //$originFile = imagecreatefrompng($_OriginDir . basename($_File));
-
-    //$fileInfo = pathinfo($file['name']);
-    //$uniqueName = uniqid() . '.' . $fileInfo['extension'];
-
-    //$img = imagecreatetruecolor(128, 128);
-    //$im2 = imagecrop($originFile, ['x' => 0, 'y' => 0, 'width' => 128, 'height' => 128]);
-    //imagePNG($im2, $_ResultDir . $uniqueName);
-    //move_uploaded_file($file['tmp_name'], $_OriginDir . $uniqueName);
-    //$im = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => 100, 'height' => 100]);
-    //var_dump($im);
 
 }
