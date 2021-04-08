@@ -175,6 +175,10 @@
     border: 1px dashed #ffffff;
 }
 
+.constructor__cells-cont.inversion .constructor__cell {
+    border-color: black;
+}
+
 .constructor__size-cont {
     display: flex;
     border: 1px solid #a0a0a0;

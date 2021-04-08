@@ -36,6 +36,7 @@
                 <label class="constructor__size-label">Y: <input id="ctr-y-input" name="_ySize"
                         class="constructor__size-input" type="number" placeholder="4" value="4"></label>
             </div>
+            <button id="ctr-color" class="constructor__input">Сменить цвет ячеек</button>
         </div>
     </form>
 

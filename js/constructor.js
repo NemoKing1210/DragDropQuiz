@@ -4,6 +4,7 @@ const _InputFile = document.getElementById("ctr-input-file");
 const _MainImg = document.getElementById("ctr-main-img");
 const _ImgCont = document.getElementById("ctr-img-cont");
 const _SubmitButton = document.getElementById("ctr-submit");
+const _ColorButton = document.getElementById("ctr-color");
 
 const _XnumInput = document.getElementById("ctr-x-input");
 const _YnumInput = document.getElementById("ctr-y-input");
@@ -62,15 +63,31 @@ function changeCellsOnImage() {
 }
 
 _XnumInput.addEventListener('change', e => {
-    const xValue = _XnumInput.value < 2 || _XnumInput.value > _MaxCell ? _DefaultCell : _XnumInput.value;
+    var xValue;
+    if (_XnumInput.value <= 1) xValue = 2;
+    else if (_XnumInput.value > _MaxCell) xValue = _MaxCell;
+    else xValue = _XnumInput.value;
+
     _XnumInput.value = xValue;
     changeCellsOnImage();
 });
 
 _YnumInput.addEventListener('change', e => {
-    const yValue = _YnumInput.value < 2 || _YnumInput.value > _MaxCell ? _DefaultCell : _YnumInput.value;
+    var yValue;
+    if (_YnumInput.value <= 1) yValue = 2;
+    else if (_YnumInput.value > _MaxCell) yValue = _MaxCell;
+    else yValue = _YnumInput.value;
+
     _YnumInput.value = yValue;
     changeCellsOnImage();
+});
+
+_ColorButton.addEventListener('click', e => {
+    e.preventDefault();
+
+    if (_CellsCont.classList.contains("inversion")) {
+        _CellsCont.classList.remove("inversion");
+    } else _CellsCont.classList.add("inversion");
 });
 
 _SubmitButton.addEventListener('click', e => {
@@ -80,20 +97,11 @@ _SubmitButton.addEventListener('click', e => {
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', _HandlerUrl, true);
-        //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        // var resultArray = {};
-        // resultArray.xSize = _XnumInput.value;
-        // resultArray.ySize = _YnumInput.value;
 
         var formData = new FormData();
         formData.append("uploadFile", _InputFile.files[0]);
         formData.append("xSize", _XnumInput.value);
         formData.append("ySize", _YnumInput.value);
-
-        console.log(formData);
-
-        //resultArray.file = formData;
 
         const cellsInput = document.querySelectorAll(`input[type="checkbox"].constructor__cell-input`);
 
@@ -104,14 +112,7 @@ _SubmitButton.addEventListener('click', e => {
             } else formData.append(`${elem.getAttribute("name")}`, false);
         });
 
-        //resultArray.cells = JSON.stringify(cellsArray);
-
-        console.log(formData.get("file"));
-
-        //console.log(resultArray);
-        //xhr.send(JSON.stringify(resultArray));
         xhr.send(formData);
-
 
         xhr.addEventListener("load", function() {
             if (xhr.readyState == 4) {
@@ -120,8 +121,6 @@ _SubmitButton.addEventListener('click', e => {
                 }
             }
         });
-
-        // _Form.submit();
 
     } else alert("Загрузите изображение");
 });
