@@ -66,12 +66,13 @@ class Quiz {
 
     // ------------------------------------ Matrix ------------------------------------------
 
+    static _DefaultTimeout = 500;
     static _DefaultImageType = ".png";
 
     _MatrixSizeX;
     _MatrixSizeY;
 
-    static _DefaultMatrixSizeElements = 128;
+    static _DefaultMatrixSizeElements = 198;
     _MatrixSizeElements;
 
     static _DefaultMatrixImgSrc = "img/matrix/";
@@ -394,8 +395,6 @@ class Quiz {
                     if (modif == "drop") {
                         _Class._DataArray[x][y] = modif;
                         _Class._StorageArray.push(splValue[0]);
-                    } else if (modif == "null") {
-                        _Class._DataArray[x][y] = modif;
                     }
 
                 }
@@ -405,12 +404,15 @@ class Quiz {
 
         _Class._StorageArray = Quiz.shuffleArray(_Class._StorageArray);
 
+        var matrixElemSizeX, matrixElemSizeY;
+
         this._DataArray.forEach(function(row, x) {
             row.forEach(function(value, y) {
 
                 const extValue = value.split(".");
-                const lValue = value.toLowerCase();
-                var imgPath;
+                const modif = value.toLowerCase();
+                const numValue = x + "|" + y;
+                var imgPath, createdElementTag;
 
                 if (extValue.length > 1) {
                     imgPath = _Class._MatrixImgSrc + value;
@@ -419,28 +421,41 @@ class Quiz {
                     else imgPath = _Class._MatrixImgSrc + value + Quiz._DefaultImageType;
                 }
 
-                const numValue = x + "|" + y;
-
-                var createdElement;
-                if (lValue == "null") {
-                    createdElement = `<div class="${Quiz._DefaultMatrixElemContClass} null" ${Quiz._DefaultNumberAttribute}=${numValue}></div>`;
-                } else if (lValue == "drop") {
-                    createdElement = `<div class="${Quiz._DefaultMatrixElemContClass}" data-drop="true" ${Quiz._DefaultNumberAttribute}=${numValue}></div>`;
+                if (modif == "drop") {
+                    createdElementTag = `<div class="${Quiz._DefaultMatrixElemContClass}" data-drop="true" ${Quiz._DefaultNumberAttribute}=${numValue}></div>`;
                 } else {
-                    createdElement = `
+                    createdElementTag = `
                     <div class="${Quiz._DefaultMatrixElemContClass}" ${Quiz._DefaultNumberAttribute}=${numValue}>
                         <img class="${Quiz._DefaultMatrixImgClass}" src="${imgPath}" alt="">
                     </div>
                     `;
                 }
 
-                matrixContainer.innerHTML = matrixContainer.innerHTML + createdElement;
+                matrixContainer.innerHTML = matrixContainer.innerHTML + createdElementTag;
+
+                const createdElement = mainContainer.querySelector(`.${Quiz._DefaultMatrixElemContClass}[${Quiz._DefaultNumberAttribute}="${numValue}"]`);
+                const createdElementImg = createdElement.querySelector(`img.${Quiz._DefaultMatrixImgClass}`);
+
+                if (createdElementImg != null || createdElementImg != undefined) {
+                    setTimeout(() => {
+                        matrixElemSizeX = createdElementImg.naturalWidth;
+                        matrixElemSizeY = createdElementImg.naturalHeight;
+                    }, Quiz._DefaultTimeout)
+                }
 
             });
         });
 
-        matrixContainer.style.gridTemplateColumns = `repeat(${_Class._MatrixSizeX}, ${_Class._MatrixSizeElements}px)`;
-        matrixContainer.style.gridTemplateRows = `repeat(${_Class._MatrixSizeY}, ${_Class._MatrixSizeElements}px)`;
+        setTimeout(() => {
+            const ratioX = matrixElemSizeX / matrixElemSizeY;
+            const ratioY = matrixElemSizeY / matrixElemSizeX;
+
+            storageContainer.style.gridTemplateColumns = `repeat(auto-fit, ${_Class._MatrixSizeElements}px)`
+            storageContainer.style.gridTemplateRows = _Class._MatrixSizeElements * ratioY + "px";
+
+            matrixContainer.style.gridTemplateColumns = `repeat(${_Class._MatrixSizeX}, ${_Class._MatrixSizeElements}px)`;
+            matrixContainer.style.gridTemplateRows = `repeat(${_Class._MatrixSizeY}, ${_Class._MatrixSizeElements*ratioY}px)`;
+        }, Quiz._DefaultTimeout)
 
         _Class._StorageArray.forEach(function(value, i) {
             const extValue = value.split(".");
@@ -469,8 +484,8 @@ class Quiz {
 
         draggableElements.forEach(function(elem) {
 
-            elem.style.height = _Class._MatrixSizeElements + "px";
-            elem.style.width = _Class._MatrixSizeElements + "px";
+            // elem.style.height = _Class._MatrixSizeElements + "px";
+            // elem.style.width = _Class._MatrixSizeElements + "px";
 
             elem.addEventListener("dragstart", e => {
                 mainContainer.classList.add(Quiz._DefaultDraggingElementClass);

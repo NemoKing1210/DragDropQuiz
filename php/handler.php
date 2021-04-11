@@ -1,8 +1,11 @@
 <?php
 
-$_MainDir = "../img/constructor/";
+$_RootDir = "../";
+$_MainDir = $_RootDir . "img/constructor/";
 $_OriginDir = $_MainDir . "origin/";
 $_ResultDir = $_MainDir . "result/";
+
+$_JS_ResultDir = "img/constructor/result/";
 
 $_DefaultTextFileName = "dataArray.txt";
 $_DefaultMinCellNumber = 2;
@@ -10,6 +13,7 @@ $_DefaultMaxCellNumber = 25;
 
 $_File;
 $_FileInfo;
+$_TextFile;
 
 $_xSize = isset($_POST['xSize']) ? $_POST['xSize'] : false;
 $_ySize = isset($_POST['ySize']) ? $_POST['ySize'] : false;
@@ -124,7 +128,7 @@ if (!$_uploadFileError) {
         $dataText = "var DataArray = [\n";
 
         $textFileName = $newDir . $_DefaultTextFileName;
-        $textFile = fopen($textFileName, "w");
+        $_TextFile = fopen($textFileName, "w");
 
         for ($y = 0; $y < $_ySize; $y++) {
             $dataText = $dataText . "[";
@@ -152,10 +156,14 @@ if (!$_uploadFileError) {
 
         }
 
-        $dataText = $dataText . "\n\nvar ImgSrc = '" . $newDir . "';";
+        $dataText = $dataText . "\n\nvar ImgSrc = '" . $_JS_ResultDir . $_FileInfo["filename"] . "/" . "';";
 
-        fwrite($textFile, $dataText);
-        fclose($textFile);
+        fwrite($_TextFile, $dataText);
+        fclose($_TextFile);
+
+        if (isset($_TextFile)) {
+            echo file_get_contents($textFileName);
+        }
 
     } elseif ($fileType == "image/png") {
 
@@ -194,7 +202,7 @@ if (!$_uploadFileError) {
         $dataText = "var DataArray = [\n";
 
         $textFileName = $newDir . $_DefaultTextFileName;
-        $textFile = fopen($textFileName, "w");
+        $_TextFile = fopen($textFileName, "w");
 
         for ($y = 0; $y < $_ySize; $y++) {
             $dataText = $dataText . "[";
@@ -222,10 +230,14 @@ if (!$_uploadFileError) {
 
         }
 
-        $dataText = $dataText . "\n\nvar ImgSrc = '" . $newDir . "';";
+        $dataText = $dataText . "\n\nvar ImgSrc = '" . $_JS_ResultDir . $_FileInfo["filename"] . "/" . "';";
 
-        fwrite($textFile, $dataText);
-        fclose($textFile);
+        fwrite($_TextFile, $dataText);
+        fclose($_TextFile);
+
+        if (isset($_TextFile)) {
+            echo file_get_contents($textFileName);
+        }
 
     }
 

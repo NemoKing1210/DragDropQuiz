@@ -5,10 +5,3 @@ var DataArray = [
 ];
 
 var ImgSrc = '../img/constructor/result/606e2ce94b53c/';
-var Width = '1806';
-
-var Height = '948';
-
-var cellSizeX = '451.5';
-
-var cellSizeY = '316';

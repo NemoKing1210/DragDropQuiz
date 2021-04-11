@@ -80,37 +80,18 @@ var Quiz_2 = new Quiz({
 // -----------------------------------------------------------------------------------------
 
 var DataArray_3 = [
-    ["w_0", "w_7", "w_7", "w_6"],
-    ["NULL", "l_0 DROP", "w_1", "r_0 DROP"],
-    ["NULL", "r_0 DROP", "r_0 DROP", "c_0"],
-    ["w_0", "w_8", "w_8", "w_5"]
-];
-
-var Quiz_3 = new Quiz({
-    Object: document.getElementById("quiz_3"),
-    Type: "Matrix",
-    Title: "Перетащить блоки так чтобы получился рабочий код программы",
-    Data: DataArray_3,
-    Size: 128,
-    Tags: ["Электротехника", "Переменный ток"]
-});
-
-// -----------------------------------------------------------------------------------------
-
-var DataArray = [
     [`606e2ce9567cc.png DROP`, `606e2ce958792.png`, `606e2ce95b43a.png DROP`, `606e2ce95e318.png DROP`],
     [`606e2ce961620.png`, `606e2ce96766a.png`, `606e2ce969c0c.png DROP`, `606e2ce96c7a5.png DROP`],
     [`606e2ce96efde.png`, `606e2ce9714aa.png`, `606e2ce973956.png`, `606e2ce975da5.png`]
 ];
 
-
-var Quiz_4 = new Quiz({
-    Object: document.getElementById("quiz_4"),
+var Quiz_3 = new Quiz({
+    Object: document.getElementById("quiz_3"),
     Type: "Matrix",
     ImgSrc: "img/constructor/result/606e2ce94b53c/",
-    Title: "Перетащить блоки так чтобы получился рабочий код программы",
-    Data: DataArray,
-    Tags: ["Halo", "Meme"]
+    Title: "Перетащить блоки так чтобы получилась цельная картинка",
+    Data: DataArray_3,
+    Tags: ["Halo", "Game"]
 });
 
 new Tooltip();
@@ -127,8 +108,4 @@ Quiz_2.submitButton.addEventListener("click", e => {
 
 Quiz_3.submitButton.addEventListener("click", e => {
     console.log(Quiz_3.getResult(DataArray_3));
-});
-
-Quiz_4.submitButton.addEventListener("click", e => {
-    console.log(Quiz_4.getResult(DataArray));
 });

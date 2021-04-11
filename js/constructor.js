@@ -115,9 +115,16 @@ _SubmitButton.addEventListener('click', e => {
         xhr.send(formData);
 
         xhr.addEventListener("load", function() {
+            const data = xhr.response;
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
-                    document.body.innerHTML = document.body.innerHTML + xhr.responseText;
+                    var binaryData = [];
+                    binaryData.push(data);
+                    var link = document.createElement('a'),
+                        filename = 'data.txt';
+                    link.href = window.URL.createObjectURL(new Blob(binaryData, { type: "text/plain" }));
+                    link.download = filename;
+                    link.click();
                 }
             }
         });
